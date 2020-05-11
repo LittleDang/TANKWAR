@@ -61,6 +61,8 @@ int main(int argc, char** argv)
             temp = temp + client_addr + ":" + to_string(conn_addr.sin_port) + "] name:" + client.back() + "\n";
             msg.push_back(temp);
             cout << msg[++sendIndex];
+            send(connfd, msg[sendIndex].c_str(), msg[sendIndex].length(), 0);
+            send(connfd, msg[sendIndex].c_str(), msg[sendIndex].length(), 0);
         }
         close(connfd);
     }

@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dang/TANKWAR/chatRoom/include/tw_socket.h
+arpa/inet.h
+-
+errno.h
+-
+memory.h
+-
+netinet/in.h
+-
+string
+-
+sys/socket.h
+-
+sys/types.h
+-
+unistd.h
+-
+vector
+-
+
+/home/dang/TANKWAR/chatRoom/src/client.cpp
+../include/tw_socket.h
+/home/dang/TANKWAR/chatRoom/include/tw_socket.h
+iostream
+-
+vector
+-
+

@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11 -march=native -O3 -pthread    CMakeFiles/text_test.dir/src/text_test.cpp.o  -o text_test -rdynamic libtw_text_box.a -lcurses 

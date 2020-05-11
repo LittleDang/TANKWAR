@@ -46,7 +46,11 @@ int main(int argc, char** argv)
         printf("send mes error: %s errno : %d", strerror(errno), errno);
         exit(0);
     }
-
+    char buff[1024];
+    sleep(5);
+    int tn = read(socketfd, buff, 30);
+    buff[tn] = '\0';
+    printf("%s\n", buff);
     close(socketfd); //关闭socket
     printf("exit\n");
     exit(0);

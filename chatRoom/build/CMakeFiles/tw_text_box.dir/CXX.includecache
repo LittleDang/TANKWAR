@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dang/TANKWAR/chatRoom/include/tw_text_box.h
+curses.h
+-
+string
+-
+vector
+-
+
+/home/dang/TANKWAR/chatRoom/src/tw_text_box.cpp
+../include/tw_text_box.h
+/home/dang/TANKWAR/chatRoom/include/tw_text_box.h
+

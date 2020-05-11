@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtw_socket.a  CMakeFiles/tw_socket.dir/src/tw_socket.cpp.o
+/usr/bin/ranlib libtw_socket.a

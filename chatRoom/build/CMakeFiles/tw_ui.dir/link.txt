@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtw_ui.a  CMakeFiles/tw_ui.dir/src/tw_ui.cpp.o
+/usr/bin/ranlib libtw_ui.a
