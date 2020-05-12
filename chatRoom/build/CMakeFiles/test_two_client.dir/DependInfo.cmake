@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dang/TANKWAR/chatRoom/src/test_client.cpp" "/home/dang/TANKWAR/chatRoom/build/CMakeFiles/test_client.dir/src/test_client.cpp.o"
+  "/home/dang/TANKWAR/chatRoom/src/test_two_client.cpp" "/home/dang/TANKWAR/chatRoom/build/CMakeFiles/test_two_client.dir/src/test_two_client.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -14,8 +14,6 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/dang/TANKWAR/chatRoom/build/CMakeFiles/tw_net.dir/DependInfo.cmake"
-  "/home/dang/TANKWAR/chatRoom/build/CMakeFiles/tw_ui.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

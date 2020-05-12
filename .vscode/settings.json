@@ -43,6 +43,7 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "cstdarg": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "mutex": "cpp"
     }
 }

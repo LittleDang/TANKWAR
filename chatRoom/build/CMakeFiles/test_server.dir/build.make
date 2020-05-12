@@ -91,6 +91,7 @@ test_server_EXTERNAL_OBJECTS =
 test_server: CMakeFiles/test_server.dir/src/test_server.cpp.o
 test_server: CMakeFiles/test_server.dir/build.make
 test_server: libtw_net.a
+test_server: libtw_ui.a
 test_server: CMakeFiles/test_server.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_server"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_server.dir/link.txt --verbose=$(VERBOSE)

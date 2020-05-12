@@ -66,7 +66,7 @@ void TW::ui::text_box::draw()
         y = y - i - 1;
         if (y < 0)
             break;
-        for (int j = 0; j < text[y].size() - 1; j++) {
+        for (int j = 0; j < text[y].size(); j++) {
             mvwaddch(win, h - i - 2, j + 1, text[y][j]);
         }
     }

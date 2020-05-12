@@ -4,8 +4,8 @@
 TW::net::server::server(int port)
 {
     memset(&sockaddr, 0, sizeof(sockaddr));
-
-    sockaddr.sin_family = AF_INET;
+    sockaddr.sin_family
+        = AF_INET;
     sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     sockaddr.sin_port = htons(port); //本地端口
 
@@ -16,12 +16,50 @@ TW::net::server::server(int port)
     //开始监听这个socket，队列长度
     closing = 0;
 }
-void TW::net::server::waitClients(void (*funtor)(int fd))
+void TW::net::server::waitClients(void (*funtor)(int fd, clients_thread* info))
 {
-    std::thread thrd(std::bind(&TW::net::server::waitClients_funtor, this, funtor));
+    std::thread thrd(std::bind(&TW::net::server::waitClients_funtor, this, funtor)); //创建一条线程用来接收新用户
     thrd.detach();
 }
-void TW::net::server::waitClients_funtor(void (*funtor)(int fd))
+uint TW::net::server::add_clients(int fd)
+{
+    for (size_t i = 0; i < clients.size(); i++) {
+        if (clients[i]->active == 0) { //如果这个客户不在了的话
+            clients[i]->active = 1;
+            clients[i]->number = i;
+            clients[i]->sockect_fd = fd;
+            return i;
+        }
+    }
+    clients_thread* temp = new clients_thread;
+    temp->active = 1;
+    temp->number = clients.size();
+    temp->sockect_fd = fd;
+    clients.push_back(temp);
+    return clients.size() - 1;
+}
+void TW::net::server::delete_clients(uint id)
+{
+    //printf("start close thread %d", id);
+    if (clients[id]->active == 0) //本来就是没激活状态
+    {
+        //printf("done\n");
+        return;
+    }
+    clients[id]->active = 0;
+    while (clients[id]->active == 0)
+        ; //printf("waitting...\n"); //等待直到线程退出，线程退出要吧active置1
+    clients[id]->active = 0;
+    //printf("done\n");
+}
+void TW::net::server::clear_allClients()
+{
+    for (int i = 0; i < clients.size(); i++) {
+        delete_clients(i);
+        delete clients[i];
+    }
+}
+void TW::net::server::waitClients_funtor(void (*funtor)(int fd, clients_thread* info))
 {
     while (!closing) {
         int connfd; //listen到的socket
@@ -29,52 +67,66 @@ void TW::net::server::waitClients_funtor(void (*funtor)(int fd))
             std::cout << "accpet socket error" << std::endl;
             continue;
         }
-        std::thread thrd(std::bind(funtor, connfd)); //会创建一条线程去处理这个客户
+        uint index = add_clients(connfd);
+        std::thread thrd(std::bind(funtor, connfd, clients[index])); //会创建一条线程去处理这个客户
         thrd.detach();
     }
 }
-void TW::net::readn(int fd, void* vptr, size_t n)
+int TW::net::readn(int fd, void* vptr, size_t n)
 {
     size_t nleft;
     ssize_t nread;
     char* ptr;
-
     ptr = (char*)vptr;
     nleft = n;
     while (nleft > 0) {
-        if ((nread = recv(fd, ptr, nleft, 0)) < 0) {
-            if (errno == EINTR)
-                nread = 0; /* and call read() again */
-            else
-                return;
-        } else if (nread == 0)
-            break; /* EOF */
-
+        if ((nread = recv(fd, ptr, nleft, 0)) <= 0) {
+            return nread;
+        }
         nleft -= nread;
         ptr += nread;
     }
+    return 1;
 }
 
-TW::net::msg TW::net::getMsg(int fd) //不读取到完整的数据报就一直阻塞
+TW::net::msg TW::net::getMsg(int fd) //不读取到完整的数据报就一直阻塞 超时模式则超时返回
 {
     u_int16_t len;
-    recv(fd, &len, 1, 0);
-    recv(fd, ((char*)(&len)) + 1, 1, 0);
     TW::net::msg re;
+    int flag = 1;
+    if ((flag = recv(fd, &len, 1, 0)) <= 0) {
+        re.flag = flag;
+        return re;
+    }
+    if ((flag = recv(fd, ((char*)(&len)) + 1, 1, 0)) <= 0) {
+        re.flag = flag;
+        return re;
+    }
     re.len = len;
     size_t n = len;
     char buff[1024];
-    readn(fd, buff, n);
+    // printf("waitting for %d ch....", (int)n);
+    if ((flag = readn(fd, buff, n)) <= 0) {
+        re.flag = flag;
+        return re;
+    };
+    //printf("done\n");
     int index = 0;
     while (index < n) {
         re.data.push_back(buff[index++]);
     }
+    re.flag = 1;
     return re;
 }
 TW::net::server::~server()
 {
+    printf("end...\n");
+    clear_allClients();
+    printf("done\n");
     close(listenfd);
 }
+
+//----------------------------------------------------------------------------
 TW::net::client::client(char* serverip, int port)
 {
     char* servInetAddr = serverip;
@@ -100,6 +152,18 @@ TW::net::client::~client()
 }
 void TW::net::client::sendMsg(std::string& s)
 {
+    /* std::string ns;
+    u_int16_t l = s.length();
+    char* lptr = (char*)&l;
+    ns.push_back(*lptr);
+    ns.push_back(*(lptr + 1));
+    for (int i = 0; i < s.length(); i++)
+        ns.push_back(s[i]);
+    send(socketfd, ns.c_str(), ns.length(), 0);*/
+    TW::net::sendMsg(socketfd, s);
+}
+void TW::net::sendMsg(int fd, std::string s)
+{
     std::string ns;
     u_int16_t l = s.length();
     char* lptr = (char*)&l;
@@ -107,11 +171,7 @@ void TW::net::client::sendMsg(std::string& s)
     ns.push_back(*(lptr + 1));
     for (int i = 0; i < s.length(); i++)
         ns.push_back(s[i]);
-    TW::net::sendMsg(socketfd, ns);
-}
-void TW::net::sendMsg(int fd, std::string s)
-{
-    send(fd, s.c_str(), s.length(), 0);
+    send(fd, ns.c_str(), ns.length(), 0);
 }
 TW::net::msg TW::net::client::getMsg()
 {

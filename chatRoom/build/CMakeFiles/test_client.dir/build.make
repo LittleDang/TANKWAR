@@ -91,6 +91,7 @@ test_client_EXTERNAL_OBJECTS =
 test_client: CMakeFiles/test_client.dir/src/test_client.cpp.o
 test_client: CMakeFiles/test_client.dir/build.make
 test_client: libtw_net.a
+test_client: libtw_ui.a
 test_client: CMakeFiles/test_client.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable test_client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_client.dir/link.txt --verbose=$(VERBOSE)

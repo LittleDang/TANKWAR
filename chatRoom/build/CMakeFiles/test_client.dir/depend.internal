@@ -3,4 +3,6 @@
 
 CMakeFiles/test_client.dir/src/test_client.cpp.o
  /home/dang/TANKWAR/chatRoom/include/tw_net.h
+ /home/dang/TANKWAR/chatRoom/include/tw_protocol.h
+ /home/dang/TANKWAR/chatRoom/include/tw_ui.h
  /home/dang/TANKWAR/chatRoom/src/test_client.cpp

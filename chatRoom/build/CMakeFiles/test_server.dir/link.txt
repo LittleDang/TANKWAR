@@ -1,1 +1,1 @@
-/usr/bin/c++    -std=c++11 -march=native -O3 -pthread    CMakeFiles/test_server.dir/src/test_server.cpp.o  -o test_server -rdynamic libtw_net.a 
+/usr/bin/c++    -std=c++11  -pthread    CMakeFiles/test_server.dir/src/test_server.cpp.o  -o test_server -rdynamic libtw_net.a libtw_ui.a -lcurses 
