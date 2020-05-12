@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtw_net.a  CMakeFiles/tw_net.dir/src/tw_net.cpp.o
+/usr/bin/ranlib libtw_net.a

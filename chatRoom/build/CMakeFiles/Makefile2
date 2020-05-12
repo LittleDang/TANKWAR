@@ -97,39 +97,76 @@ clean: CMakeFiles/test_ui.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/tw_socket.dir
+# Target rules for target CMakeFiles/tw_net.dir
 
 # All Build rule for target.
-CMakeFiles/tw_socket.dir/all:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/depend
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=7,8 "Built target tw_socket"
-.PHONY : CMakeFiles/tw_socket.dir/all
+CMakeFiles/tw_net.dir/all:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/depend
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=7,8 "Built target tw_net"
+.PHONY : CMakeFiles/tw_net.dir/all
 
 # Include target in all.
-all: CMakeFiles/tw_socket.dir/all
+all: CMakeFiles/tw_net.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/tw_socket.dir/rule: cmake_check_build_system
+CMakeFiles/tw_net.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tw_socket.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/tw_net.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 0
-.PHONY : CMakeFiles/tw_socket.dir/rule
+.PHONY : CMakeFiles/tw_net.dir/rule
 
 # Convenience name for target.
-tw_socket: CMakeFiles/tw_socket.dir/rule
+tw_net: CMakeFiles/tw_net.dir/rule
 
-.PHONY : tw_socket
-
-# clean rule for target.
-CMakeFiles/tw_socket.dir/clean:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/clean
-.PHONY : CMakeFiles/tw_socket.dir/clean
+.PHONY : tw_net
 
 # clean rule for target.
-clean: CMakeFiles/tw_socket.dir/clean
+CMakeFiles/tw_net.dir/clean:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/clean
+.PHONY : CMakeFiles/tw_net.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/tw_net.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_client.dir
+
+# All Build rule for target.
+CMakeFiles/test_client.dir/all: CMakeFiles/tw_net.dir/all
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/depend
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=1,2 "Built target test_client"
+.PHONY : CMakeFiles/test_client.dir/all
+
+# Include target in all.
+all: CMakeFiles/test_client.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_client.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test_client.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 0
+.PHONY : CMakeFiles/test_client.dir/rule
+
+# Convenience name for target.
+test_client: CMakeFiles/test_client.dir/rule
+
+.PHONY : test_client
+
+# clean rule for target.
+CMakeFiles/test_client.dir/clean:
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/clean
+.PHONY : CMakeFiles/test_client.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/test_client.dir/clean
 
 .PHONY : clean
 
@@ -171,76 +208,39 @@ clean: CMakeFiles/tw_ui.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/server.dir
+# Target rules for target CMakeFiles/test_server.dir
 
 # All Build rule for target.
-CMakeFiles/server.dir/all: CMakeFiles/tw_socket.dir/all
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/depend
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=3,4 "Built target server"
-.PHONY : CMakeFiles/server.dir/all
+CMakeFiles/test_server.dir/all: CMakeFiles/tw_net.dir/all
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/depend
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=3,4 "Built target test_server"
+.PHONY : CMakeFiles/test_server.dir/all
 
 # Include target in all.
-all: CMakeFiles/server.dir/all
+all: CMakeFiles/test_server.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/server.dir/rule: cmake_check_build_system
+CMakeFiles/test_server.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/server.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test_server.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 0
-.PHONY : CMakeFiles/server.dir/rule
+.PHONY : CMakeFiles/test_server.dir/rule
 
 # Convenience name for target.
-server: CMakeFiles/server.dir/rule
+test_server: CMakeFiles/test_server.dir/rule
 
-.PHONY : server
-
-# clean rule for target.
-CMakeFiles/server.dir/clean:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/clean
-.PHONY : CMakeFiles/server.dir/clean
+.PHONY : test_server
 
 # clean rule for target.
-clean: CMakeFiles/server.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/client.dir
-
-# All Build rule for target.
-CMakeFiles/client.dir/all: CMakeFiles/tw_socket.dir/all
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/depend
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/dang/TANKWAR/chatRoom/build/CMakeFiles --progress-num=1,2 "Built target client"
-.PHONY : CMakeFiles/client.dir/all
-
-# Include target in all.
-all: CMakeFiles/client.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/client.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/dang/TANKWAR/chatRoom/build/CMakeFiles 0
-.PHONY : CMakeFiles/client.dir/rule
-
-# Convenience name for target.
-client: CMakeFiles/client.dir/rule
-
-.PHONY : client
+CMakeFiles/test_server.dir/clean:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/clean
+.PHONY : CMakeFiles/test_server.dir/clean
 
 # clean rule for target.
-CMakeFiles/client.dir/clean:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/clean
-.PHONY : CMakeFiles/client.dir/clean
-
-# clean rule for target.
-clean: CMakeFiles/client.dir/clean
+clean: CMakeFiles/test_server.dir/clean
 
 .PHONY : clean
 

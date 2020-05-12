@@ -1,2 +1,0 @@
-/usr/bin/ar qc libtw_text_box.a  CMakeFiles/tw_text_box.dir/src/tw_text_box.cpp.o
-/usr/bin/ranlib libtw_text_box.a

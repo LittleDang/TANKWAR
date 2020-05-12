@@ -1,7 +1,7 @@
-/home/dang/TANKWAR/chatRoom/build/CMakeFiles/rebuild_cache.dir
 /home/dang/TANKWAR/chatRoom/build/CMakeFiles/test_ui.dir
-/home/dang/TANKWAR/chatRoom/build/CMakeFiles/tw_socket.dir
+/home/dang/TANKWAR/chatRoom/build/CMakeFiles/rebuild_cache.dir
+/home/dang/TANKWAR/chatRoom/build/CMakeFiles/tw_net.dir
+/home/dang/TANKWAR/chatRoom/build/CMakeFiles/test_client.dir
 /home/dang/TANKWAR/chatRoom/build/CMakeFiles/edit_cache.dir
 /home/dang/TANKWAR/chatRoom/build/CMakeFiles/tw_ui.dir
-/home/dang/TANKWAR/chatRoom/build/CMakeFiles/server.dir
-/home/dang/TANKWAR/chatRoom/build/CMakeFiles/client.dir
+/home/dang/TANKWAR/chatRoom/build/CMakeFiles/test_server.dir

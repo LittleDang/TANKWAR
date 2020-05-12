@@ -1,7 +1,7 @@
 #include "../include/tw_ui.h"
 #include <thread>
 #include <unistd.h>
-TW::box_ui::box_ui(int x_, int y_, int w_, int h_)
+TW::ui::box_ui::box_ui(int x_, int y_, int w_, int h_)
 {
     x = x_;
     y = y_;
@@ -10,19 +10,19 @@ TW::box_ui::box_ui(int x_, int y_, int w_, int h_)
     win = newwin(h_, w_, y_, x_);
     selected = 0;
 }
-TW::box_ui::~box_ui()
+TW::ui::box_ui::~box_ui()
 {
     delwin(win);
 }
 
-void TW::box_ui::setPos(int x_, int y_)
+void TW::ui::box_ui::setPos(int x_, int y_)
 {
     x = x_;
     y = y_;
     delwin(win);
     win = newwin(h, w, y, x);
 }
-void TW::box_ui::setSize(int w_, int h_)
+void TW::ui::box_ui::setSize(int w_, int h_)
 {
     w = w_;
     h = h_;
@@ -30,11 +30,11 @@ void TW::box_ui::setSize(int w_, int h_)
     win = newwin(h, w, y, x);
 }
 
-void TW::box_ui::setSelected(int f)
+void TW::ui::box_ui::setSelected(int f)
 {
     selected = f;
 }
-void TW::box_ui::setKey(char ch)
+void TW::ui::box_ui::setKey(char ch)
 {
     buff.push_back(ch);
     if (buff.size() > 1024) //缓存上限1024char 超过自己清除。
@@ -43,34 +43,31 @@ void TW::box_ui::setKey(char ch)
 
 //--------------------box
 
-TW::text_box::text_box(int x_, int y_, int w_, int h_)
+TW::ui::text_box::text_box(int x_, int y_, int w_, int h_)
     : box_ui(x_, y_, w_, h_)
 {
 }
 
-void TW::text_box::add_text(std::string s)
+void TW::ui::text_box::add_text(std::string s)
 {
     text.push_back(s);
 }
 
-void TW::text_box::clear_text(std::string)
+void TW::ui::text_box::clear_text(std::string)
 {
     text.clear();
 }
 
-void TW::text_box::draw()
+void TW::ui::text_box::draw()
 {
     wclear(win);
-    char tt[2];
-    tt[1] = '\0';
     for (int i = 0; i < h - 2; i++) {
         int y = text.size(); //to int
         y = y - i - 1;
         if (y < 0)
             break;
-        for (int j = 0; j < text[y].size(); j++) {
-            tt[0] = text[y][j];
-            mvwprintw(win, h - i - 2, j + 1, "%s", tt);
+        for (int j = 0; j < text[y].size() - 1; j++) {
+            mvwaddch(win, h - i - 2, j + 1, text[y][j]);
         }
     }
     if (selected)
@@ -82,23 +79,23 @@ void TW::text_box::draw()
 
 //-------------------------text box
 
-TW::input_box::input_box(int x_, int y_, int w_, int h_)
+TW::ui::input_box::input_box(int x_, int y_, int w_, int h_)
     : box_ui(x_, y_, w_, h_)
 {
 }
 int isVaildCh(char ch)
 {
-    /*if (ch >= 'a' && ch <= 'z')
+    if (ch >= 'a' && ch <= 'z')
         return 1;
     if (ch >= 'A' && ch <= 'Z')
         return 1;
     if (ch >= '0' && ch <= '9')
         return 1;
     if (ch == ' ')
-        return 1;*/
+        return 1;
     return 1;
 }
-void TW::input_box::draw()
+void TW::ui::input_box::draw()
 {
     if (!selected) {
         wclear(win);
@@ -108,6 +105,8 @@ void TW::input_box::draw()
         //wrefresh(win);
     } else {
         char ch;
+        //读缓冲区，先锁定缓冲区
+        key_lock.lock();
         while (!buff.empty()) {
             ch = buff.front();
             buff.pop_front();
@@ -123,17 +122,18 @@ void TW::input_box::draw()
                 showText.push_back(ch);
             }
         }
+        key_lock.unlock(); //解锁
         wclear(win);
         if (!showText.empty()) {
-            showText.push_back('\0'); //加个结束符表示结束
-            mvwprintw(win, 1, 1, "%s", showText.c_str());
-            showText.pop_back();
+            for (int i = 0; i < showText.length(); i++) {
+                mvwaddch(win, 1, 1 + i, showText[i]);
+            }
         }
         box(win, '|', '-');
     }
 }
 
-std::string TW::input_box::getText()
+std::string TW::ui::input_box::getText()
 {
     if (output_text.empty())
         return "";
@@ -143,17 +143,19 @@ std::string TW::input_box::getText()
 }
 //----------------------inputbox
 
-TW::board::board()
+TW::ui::board::board()
 {
     selected_ui = NULL;
 }
-void TW::board::keyFuntor()
+void TW::ui::board::keyFuntor()
 {
     while (1) {
         char ch = getch();
         if (ch != 9) {
             if (selected_ui) {
+                selected_ui->key_lock.lock(); //写缓冲区，先锁定
                 selected_ui->setKey(ch);
+                selected_ui->key_lock.unlock();
             }
         } else {
             selectNext();
@@ -161,13 +163,13 @@ void TW::board::keyFuntor()
         usleep(10000);
     }
 }
-void TW::board::createKeythread()
+void TW::ui::board::createKeythread()
 {
-    std::thread thr(std::bind(&TW::board::keyFuntor, this));
+    std::thread thr(std::bind(&TW::ui::board::keyFuntor, this));
     thr.detach();
 }
 
-void TW::board::addUi(box_ui* u)
+void TW::ui::board::addUi(box_ui* u)
 {
     if (selected_ui == NULL) {
         selected_ui = u;
@@ -177,7 +179,7 @@ void TW::board::addUi(box_ui* u)
     }
     uis.push_back(u);
 }
-void TW::board::selectNext()
+void TW::ui::board::selectNext()
 {
     if (selected_ui == NULL || uis.size() == 1)
         return;
@@ -196,7 +198,7 @@ void TW::board::selectNext()
         }
     }
 }
-void TW::board::refresh()
+void TW::ui::board::refresh()
 {
 
     for (int i = 0; i < uis.size(); i++) {

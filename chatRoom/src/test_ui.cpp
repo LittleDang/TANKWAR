@@ -7,19 +7,18 @@ int main(int argc, char* argv[])
     noecho(); //关闭回显模式
     keypad(stdscr, 1); //开启键值转换模式
     curs_set(0);
-    TW::text_box textb(1, 1, 80, 40);
-    TW::input_box inputb(1, 45, 80, 3);
-    TW::board uiboard;
+    TW::ui::text_box textb(1, 1, 80, 40);
+    TW::ui::input_box inputb(1, 45, 80, 3);
+    TW::ui::board uiboard;
     uiboard.createKeythread();
     uiboard.addUi(&inputb);
     uiboard.addUi(&textb);
+
     // textb.add_text("welcome to my chat room");
     while (1) {
         std::string s = inputb.getText();
         if (!s.empty())
             textb.add_text(s);
-        textb.draw();
-        inputb.draw();
         uiboard.refresh();
         usleep(10000);
     }

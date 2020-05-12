@@ -124,17 +124,30 @@ test_ui/fast:
 .PHONY : test_ui/fast
 
 #=============================================================================
-# Target rules for targets named tw_socket
+# Target rules for targets named tw_net
 
 # Build rule for target.
-tw_socket: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tw_socket
-.PHONY : tw_socket
+tw_net: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tw_net
+.PHONY : tw_net
 
 # fast build rule for target.
-tw_socket/fast:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/build
-.PHONY : tw_socket/fast
+tw_net/fast:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/build
+.PHONY : tw_net/fast
+
+#=============================================================================
+# Target rules for targets named test_client
+
+# Build rule for target.
+test_client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_client
+.PHONY : test_client
+
+# fast build rule for target.
+test_client/fast:
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/build
+.PHONY : test_client/fast
 
 #=============================================================================
 # Target rules for targets named tw_ui
@@ -150,84 +163,71 @@ tw_ui/fast:
 .PHONY : tw_ui/fast
 
 #=============================================================================
-# Target rules for targets named server
+# Target rules for targets named test_server
 
 # Build rule for target.
-server: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 server
-.PHONY : server
+test_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_server
+.PHONY : test_server
 
 # fast build rule for target.
-server/fast:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/build
-.PHONY : server/fast
+test_server/fast:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/build
+.PHONY : test_server/fast
 
-#=============================================================================
-# Target rules for targets named client
+src/test_client.o: src/test_client.cpp.o
 
-# Build rule for target.
-client: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 client
-.PHONY : client
-
-# fast build rule for target.
-client/fast:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/build
-.PHONY : client/fast
-
-src/client.o: src/client.cpp.o
-
-.PHONY : src/client.o
+.PHONY : src/test_client.o
 
 # target to build an object file
-src/client.cpp.o:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client.cpp.o
-.PHONY : src/client.cpp.o
+src/test_client.cpp.o:
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/src/test_client.cpp.o
+.PHONY : src/test_client.cpp.o
 
-src/client.i: src/client.cpp.i
+src/test_client.i: src/test_client.cpp.i
 
-.PHONY : src/client.i
+.PHONY : src/test_client.i
 
 # target to preprocess a source file
-src/client.cpp.i:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client.cpp.i
-.PHONY : src/client.cpp.i
+src/test_client.cpp.i:
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/src/test_client.cpp.i
+.PHONY : src/test_client.cpp.i
 
-src/client.s: src/client.cpp.s
+src/test_client.s: src/test_client.cpp.s
 
-.PHONY : src/client.s
+.PHONY : src/test_client.s
 
 # target to generate assembly for a file
-src/client.cpp.s:
-	$(MAKE) -f CMakeFiles/client.dir/build.make CMakeFiles/client.dir/src/client.cpp.s
-.PHONY : src/client.cpp.s
+src/test_client.cpp.s:
+	$(MAKE) -f CMakeFiles/test_client.dir/build.make CMakeFiles/test_client.dir/src/test_client.cpp.s
+.PHONY : src/test_client.cpp.s
 
-src/server.o: src/server.cpp.o
+src/test_server.o: src/test_server.cpp.o
 
-.PHONY : src/server.o
+.PHONY : src/test_server.o
 
 # target to build an object file
-src/server.cpp.o:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.cpp.o
-.PHONY : src/server.cpp.o
+src/test_server.cpp.o:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/src/test_server.cpp.o
+.PHONY : src/test_server.cpp.o
 
-src/server.i: src/server.cpp.i
+src/test_server.i: src/test_server.cpp.i
 
-.PHONY : src/server.i
+.PHONY : src/test_server.i
 
 # target to preprocess a source file
-src/server.cpp.i:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.cpp.i
-.PHONY : src/server.cpp.i
+src/test_server.cpp.i:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/src/test_server.cpp.i
+.PHONY : src/test_server.cpp.i
 
-src/server.s: src/server.cpp.s
+src/test_server.s: src/test_server.cpp.s
 
-.PHONY : src/server.s
+.PHONY : src/test_server.s
 
 # target to generate assembly for a file
-src/server.cpp.s:
-	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/server.cpp.s
-.PHONY : src/server.cpp.s
+src/test_server.cpp.s:
+	$(MAKE) -f CMakeFiles/test_server.dir/build.make CMakeFiles/test_server.dir/src/test_server.cpp.s
+.PHONY : src/test_server.cpp.s
 
 src/test_ui.o: src/test_ui.cpp.o
 
@@ -256,32 +256,32 @@ src/test_ui.cpp.s:
 	$(MAKE) -f CMakeFiles/test_ui.dir/build.make CMakeFiles/test_ui.dir/src/test_ui.cpp.s
 .PHONY : src/test_ui.cpp.s
 
-src/tw_socket.o: src/tw_socket.cpp.o
+src/tw_net.o: src/tw_net.cpp.o
 
-.PHONY : src/tw_socket.o
+.PHONY : src/tw_net.o
 
 # target to build an object file
-src/tw_socket.cpp.o:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/src/tw_socket.cpp.o
-.PHONY : src/tw_socket.cpp.o
+src/tw_net.cpp.o:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/src/tw_net.cpp.o
+.PHONY : src/tw_net.cpp.o
 
-src/tw_socket.i: src/tw_socket.cpp.i
+src/tw_net.i: src/tw_net.cpp.i
 
-.PHONY : src/tw_socket.i
+.PHONY : src/tw_net.i
 
 # target to preprocess a source file
-src/tw_socket.cpp.i:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/src/tw_socket.cpp.i
-.PHONY : src/tw_socket.cpp.i
+src/tw_net.cpp.i:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/src/tw_net.cpp.i
+.PHONY : src/tw_net.cpp.i
 
-src/tw_socket.s: src/tw_socket.cpp.s
+src/tw_net.s: src/tw_net.cpp.s
 
-.PHONY : src/tw_socket.s
+.PHONY : src/tw_net.s
 
 # target to generate assembly for a file
-src/tw_socket.cpp.s:
-	$(MAKE) -f CMakeFiles/tw_socket.dir/build.make CMakeFiles/tw_socket.dir/src/tw_socket.cpp.s
-.PHONY : src/tw_socket.cpp.s
+src/tw_net.cpp.s:
+	$(MAKE) -f CMakeFiles/tw_net.dir/build.make CMakeFiles/tw_net.dir/src/tw_net.cpp.s
+.PHONY : src/tw_net.cpp.s
 
 src/tw_ui.o: src/tw_ui.cpp.o
 
@@ -316,25 +316,25 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
 	@echo "... test_ui"
-	@echo "... tw_socket"
+	@echo "... rebuild_cache"
+	@echo "... tw_net"
+	@echo "... test_client"
 	@echo "... edit_cache"
 	@echo "... tw_ui"
-	@echo "... server"
-	@echo "... client"
-	@echo "... src/client.o"
-	@echo "... src/client.i"
-	@echo "... src/client.s"
-	@echo "... src/server.o"
-	@echo "... src/server.i"
-	@echo "... src/server.s"
+	@echo "... test_server"
+	@echo "... src/test_client.o"
+	@echo "... src/test_client.i"
+	@echo "... src/test_client.s"
+	@echo "... src/test_server.o"
+	@echo "... src/test_server.i"
+	@echo "... src/test_server.s"
 	@echo "... src/test_ui.o"
 	@echo "... src/test_ui.i"
 	@echo "... src/test_ui.s"
-	@echo "... src/tw_socket.o"
-	@echo "... src/tw_socket.i"
-	@echo "... src/tw_socket.s"
+	@echo "... src/tw_net.o"
+	@echo "... src/tw_net.i"
+	@echo "... src/tw_net.s"
 	@echo "... src/tw_ui.o"
 	@echo "... src/tw_ui.i"
 	@echo "... src/tw_ui.s"

@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11 -march=native -O3 -pthread    CMakeFiles/text_ui.dir/src/text_ui.cpp.o  -o text_ui -rdynamic libtw_ui.a -lcurses 

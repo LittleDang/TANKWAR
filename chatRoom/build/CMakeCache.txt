@@ -172,10 +172,7 @@ chatroom_BINARY_DIR:STATIC=/home/dang/TANKWAR/chatRoom/build
 chatroom_SOURCE_DIR:STATIC=/home/dang/TANKWAR/chatRoom
 
 //Dependencies for target
-tw_socket_LIB_DEPENDS:STATIC=
-
-//Dependencies for target
-tw_text_box_LIB_DEPENDS:STATIC=
+tw_net_LIB_DEPENDS:STATIC=
 
 //Dependencies for target
 tw_ui_LIB_DEPENDS:STATIC=
