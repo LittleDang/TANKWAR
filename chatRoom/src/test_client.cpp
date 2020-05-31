@@ -56,7 +56,16 @@ int main(int argc, char* argv[])
     thread thr(show);
     thr.detach();
     c->sendMsg(data);
+    //int index = 1;
+    // long long send_index = 0;
     while (1) {
+        /* index++;
+        if (index % 50 == 0) {
+            send_index++;
+            data = PROTO_SPEAK + to_string(send_index);
+            index = 1;
+            c->sendMsg(data);
+        }*/
         std::string s = inputb.getText();
         if (!s.empty()) {
             data = PROTO_SPEAK + s;

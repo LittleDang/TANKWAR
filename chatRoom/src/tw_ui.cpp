@@ -58,6 +58,10 @@ void TW::ui::text_box::clear_text(std::string)
     text.clear();
 }
 
+void TW::ui::text_box::logic()
+{
+    //do nothing
+}
 void TW::ui::text_box::draw()
 {
     wclear(win);
@@ -93,7 +97,29 @@ int isVaildCh(char ch)
         return 1;
     if (ch == ' ')
         return 1;
-    return 1;
+    return 0;
+}
+void TW::ui::input_box::logic()
+{
+    char ch;
+    //读缓冲区，先锁定缓冲区
+    key_lock.lock();
+    while (!buff.empty()) {
+        ch = buff.front();
+        buff.pop_front();
+        if (ch == '\n') //回车，表示输入结束
+        {
+            //showText.push_back('\0');
+            output_text.push_back(showText);
+            showText.clear();
+        } else if (ch == 7) { //退格键
+            if (!showText.empty())
+                showText.pop_back();
+        } else if (isVaildCh(ch)) {
+            showText.push_back(ch);
+        }
+    }
+    key_lock.unlock(); //解锁
 }
 void TW::ui::input_box::draw()
 {
@@ -104,25 +130,6 @@ void TW::ui::input_box::draw()
         box(win, ' ', ' ');
         //wrefresh(win);
     } else {
-        char ch;
-        //读缓冲区，先锁定缓冲区
-        key_lock.lock();
-        while (!buff.empty()) {
-            ch = buff.front();
-            buff.pop_front();
-            if (ch == '\n') //回车，表示输入结束
-            {
-                showText.push_back('\0');
-                output_text.push_back(showText);
-                showText.clear();
-            } else if (ch == 7) { //退格键
-                if (!showText.empty())
-                    showText.pop_back();
-            } else if (isVaildCh(ch)) {
-                showText.push_back(ch);
-            }
-        }
-        key_lock.unlock(); //解锁
         wclear(win);
         if (!showText.empty()) {
             for (int i = 0; i < showText.length(); i++) {
@@ -142,6 +149,45 @@ std::string TW::ui::input_box::getText()
     return s;
 }
 //----------------------inputbox
+TW::ui::draw_box::draw_box(int x_, int y_, int w_, int h_)
+    : box_ui(x_, y_, w_, h_)
+{
+    x = x_;
+    y = y_;
+    h = h_;
+    w = w_;
+    win = newwin(h_ + 2, w_ * 2 + 2, y_, x_);
+    selected = 0;
+    pixel.resize(w_ * h_);
+}
+void TW::ui::draw_box::logic()
+{
+    //do nothing
+}
+void TW::ui::draw_box::draw()
+{
+    wclear(win);
+    for (int i = 0; i < pixel.size(); i++) {
+        int r = i / w;
+        int c = (i % w) * 2;
+        if (pixel[i].size() >= 2) {
+            mvwaddch(win, 1 + r, 1 + c, pixel[i][0]);
+            mvwaddch(win, 1 + r, 2 + c, pixel[i][1]);
+        }
+    }
+    if (selected)
+        box(win, '|', '-');
+    else
+        box(win, ' ', ' ');
+}
+void TW::ui::draw_box::setPixel(int x_, int y_, std::string ch)
+{
+    if (x_ < 0 || x_ >= w || y_ < 0 || y_ >= h)
+        return;
+    pixel[x_ + y_ * w] = ch;
+}
+
+//----------------------drawbox
 
 TW::ui::board::board()
 {
@@ -202,6 +248,7 @@ void TW::ui::board::refresh()
 {
 
     for (int i = 0; i < uis.size(); i++) {
+        uis[i]->logic();
         uis[i]->draw();
         wrefresh(uis[i]->win);
     }

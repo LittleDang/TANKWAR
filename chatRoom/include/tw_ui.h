@@ -19,17 +19,20 @@ namespace ui {
     public:
         box_ui(int x_, int y_, int w_, int h_);
         ~box_ui();
-        void setPos(int x_, int y_);
-        void setSize(int w_, int h_);
-        void setSelected(int f);
-        virtual void draw() = 0;
-        void setKey(char ch);
+        void setPos(int x_, int y_); //本质上是通过删除原来的win，重新创建一个win
+        void setSize(int w_, int h_); //本质上是通过删除原来的win，重新创建一个win
+        void setSelected(int f); //表示选中与否，选中状态下，board会把键盘信号发送到该ui的缓存区
+
+        virtual void draw() = 0; //纯虚函数，没有实现，待派生类实现，主要用来提供接口让board统一管理
+        //主要用来可视化的操作
+        virtual void logic() = 0; //纯虚函数，没有实现，待派生类实现，主要用来提供接口让board统一管理
+        //主要用来处理一些逻辑上的东西，例如缓存区
+
+        void setKey(char ch); //主要是提供给board写键盘信号到缓存区
         std::mutex key_lock; //用来保证缓冲区读和写不同时操作
         WINDOW* win;
         int selected;
         int x, y, w, h;
-
-    protected:
         std::list<char> buff;
     };
 
@@ -40,6 +43,7 @@ namespace ui {
         void add_text(std::string s);
         void clear_text(std::string s);
         void draw();
+        void logic();
 
     private:
         std::vector<std::string> text;
@@ -51,13 +55,25 @@ namespace ui {
         input_box(int x_, int y_, int w_, int h_);
         std::string getText();
         void draw();
+        void logic();
 
     private:
         std::list<std::string> output_text;
         std::string showText;
     };
     //--------------------------------------------------------------------------
+    class draw_box : public box_ui {
+    public:
+        draw_box(int x_, int y_, int w_, int h_);
+        void draw();
+        void logic();
 
+        void setPixel(int x_, int y_, std::string ch);
+
+    private:
+        std::vector<std::string> pixel;
+    };
+    //--------------------------------------------------------------------------
     class board { //画板类，负责管理ui
     public:
         board();
@@ -65,7 +81,7 @@ namespace ui {
         void selectNext();
         void refresh();
         void keyFuntor();
-        void createKeythread();
+        void createKeythread(); //创建一条线程来监听键盘信号
 
     private:
         std::vector<box_ui*> uis;
